@@ -21,14 +21,16 @@ will return 0 outside of the covered spectral range.
  * - value
    - |float|
    - Returned value
+
  * - lambda_min
    - |float|
-   - Lower bound of the covered spectral interval. Default: MTS_WAVELENGTH_MIN
+   - Lower bound of the covered spectral interval. (Default: MTS_WAVELENGTH_MIN)
+
  * - lambda_max
    - |float|
-   - Upper bound of the covered spectral interval. Default: MTS_WAVELENGTH_MAX
- */
+   - Upper bound of the covered spectral interval. (Default: MTS_WAVELENGTH_MAX)
 
+ */
 template <typename Float, typename Spectrum>
 class UniformSpectrum final : public Texture<Float, Spectrum> {
 public:
@@ -56,7 +58,7 @@ public:
         MTS_MASKED_FUNCTION(ProfilerPhase::TextureEvaluate, active);
 
         if constexpr (is_spectral_v<Spectrum>) {
-            auto active_w = (si.wavelengths >= m_lambda_min) &&
+            auto active_w = (si.wavelengths >= m_lambda_min) &
                             (si.wavelengths <= m_lambda_max);
 
             return select(active_w, UnpolarizedSpectrum(m_value),
