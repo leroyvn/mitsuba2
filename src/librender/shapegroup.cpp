@@ -45,12 +45,14 @@ MTS_VARIANT ShapeGroup<Float, Spectrum>::ShapeGroup(const Properties &props) {
     m_bbox = m_kdtree->bbox();
 #endif
 
+#if defined(MTS_ENABLE_EMBREE) || defined(MTS_ENABLE_CUDA)
     if constexpr (ek::is_jit_array_v<Float>) {
         // Get shapes registry ids
         m_shapes_registry_ids.resize(m_shapes.size());
         for (size_t i = 0; i < m_shapes.size(); i++)
             m_shapes_registry_ids[i] = jitc_registry_get_id(m_shapes[i]);
     }
+#endif
 }
 
 MTS_VARIANT ShapeGroup<Float, Spectrum>::~ShapeGroup() {

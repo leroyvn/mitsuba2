@@ -324,7 +324,7 @@ MTS_VARIANT void Mesh<Float, Spectrum>::build_parameterization() {
 
     scoped_migrate_to_host scope(mesh->m_vertex_positions, m_vertex_texcoords);
 
-    ScalarFloat *pos_out = mesh->m_vertex_positions.data();
+    ScalarFloat *pos_out = (ScalarFloat *) mesh->m_vertex_positions.data();
     for (size_t i = 0; i < m_vertex_count; ++i) {
         ScalarPoint2f uv_i = vertex_texcoord(i);
         pos_out[i*3 + 0] = uv_i.x();
